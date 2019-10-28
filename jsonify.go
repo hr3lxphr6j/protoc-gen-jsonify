@@ -79,11 +79,11 @@ import (
 	"{{ pbLib }}"
 )
 {{ range .AllMessages }}
-// {{ marshaler . }} describes the default jsonpb.Marshaler used by all 
-// instances of {{ name . }}. This struct is safe to replace or modify but 
+// {{ marshaler . }} describes the default jsonpb.Marshaler used by all
+// instances of {{ name . }}. This struct is safe to replace or modify but
 // should not be done so concurrently.
 var {{ marshaler . }} = new(jsonpb.Marshaler)
-// MarshalJSON satisfies the encoding/json Marshaler interface. This method 
+// MarshalJSON satisfies the encoding/json Marshaler interface. This method
 // uses the more correct jsonpb package to correctly marshal the message.
 func (m *{{ name . }}) MarshalJSON() ([]byte, error) {
 	if m == nil {
@@ -96,11 +96,11 @@ func (m *{{ name . }}) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 var _ json.Marshaler = (*{{ name . }})(nil)
-// {{ unmarshaler . }} describes the default jsonpb.Unmarshaler used by all 
-// instances of {{ name . }}. This struct is safe to replace or modify but 
+// {{ unmarshaler . }} describes the default jsonpb.Unmarshaler used by all
+// instances of {{ name . }}. This struct is safe to replace or modify but
 // should not be done so concurrently.
 var {{ unmarshaler . }} = new(jsonpb.Unmarshaler)
-// UnmarshalJSON satisfies the encoding/json Unmarshaler interface. This method 
+// UnmarshalJSON satisfies the encoding/json Unmarshaler interface. This method
 // uses the more correct jsonpb package to correctly unmarshal the message.
 func (m *{{ name . }}) UnmarshalJSON(b []byte) error {
 	return {{ unmarshaler . }}.Unmarshal(bytes.NewReader(b), m)
